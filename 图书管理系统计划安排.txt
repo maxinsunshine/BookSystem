@@ -1,0 +1,58 @@
+	框架采用：
+
+		BookSystem项目中的ssm结构，然后，样式采用bookEstore;然后实体类文件也用bookEstore项目中的；
+
+	一、bookSystem中用的是oracle数据库，切换下数据库；
+
+	二、自动生成代码的工具，用下；将bookEstore中的表数据，生成文件到bookSystem中。新建数据库booksystem;建表：
+
+	users用户表
+	create table users (
+   		id int primary key auto_increment,
+   		username varchar(40),
+   		password varchar(100),
+   		nickname varchar(40),
+   		email varchar(100),
+   		role varchar(100) ,
+   		state int , 
+   		activecode varchar(100),
+   		updatetime timestamp);	
+	books图书表：
+	create table books(
+   		booksid varchar(100) primary key , 
+   		booksname varchar(40), 
+   		booksprice double,
+   		bookscategory varchar(40),
+   		booksnum int,
+   		booksimgurl varchar(100),
+   		description varchar(255) ,
+		booksstate int COMMENT '图书状态');
+		
+	图书借阅表：orders
+		存在这样的一个问题：
+			图书表和订单表的关联问题：订单表里要有这个图书的主键，订单的状态键，
+		create table orders(
+   			id varchar(100) primary key,
+   			money double,
+   			receiverinfo varchar(255),
+   			paystate int, 
+   			ordertime timestamp,
+   			user_id int , 
+   			foreign key(user_id) references users(id));
+		订单和图书的关联表：
+		create table orderitem(
+   			order_id varchar(100),  
+   			books_id varchar(100),
+   			lendnum int , 
+   			primary key(order_id,books_id), 
+   			foreign key(order_id) references orders(id), 
+   			foreign key(books_id) references books(booksid));
+		
+
+
+
+	三、首页功能实现，注册，登录，注销；（超级管理员）
+
+	四、图书相关功能介绍；
+
+	五、系统中样式的修改；
